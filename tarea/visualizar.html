@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualización de datos</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <script>
+        function mostrarDatos() {
+            // Obtener el XML almacenado en localStorage
+            const xmlData = localStorage.getItem('usuarioXML');
+            if (xmlData) {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlData, "application/xml");
+
+                // Extraer información del XML
+                const nombre = xmlDoc.getElementsByTagName("nombre")[0].textContent;
+
+                // Mostrar el saludo personalizado en el HTML
+                document.getElementById("resultado").innerHTML = `
+                    <p> ¡Hola, ${nombre}!</p>
+                `;
+            } else {
+                document.getElementById("resultado").innerHTML = "<p>No se encontraron datos.</p>";
+            }
+        }
+
+        function eliminarDatos() {
+            localStorage.removeItem('usuarioXML');
+            window.location.href = 'formulario.html';  // Redirige al formulario
+        }
+    </script>
+</head>
+<body onload="mostrarDatos()">
+    <h1>Visualización de datos</h1>
+    <div id="resultado"></div>
+    <button onclick="eliminarDatos()">Eliminar datos</button>
+</body>
+</html>
+
+
